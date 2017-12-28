@@ -1,0 +1,26 @@
+#ifndef __PRIVATE_CONFIG_H__
+#define __PRIVATE_CONFIG_H__
+
+#define APP_VERSION "1.4.1"
+
+#define WIFI_SSID "EspOhab-Gateway"
+#define WIFI_PASS "0123456789"
+#define WIFI_CHNL 1
+#define WIFI_HIDE_SSID 1
+
+#define ETH_HOSTNAME "espohab-gateway"
+
+#define OTA_HOSTNAME "espohab-gateway"
+#define OTA_PASS_HASH "your md5 password hash"
+
+#define OHAB_HOST "http://192.168.0.1"
+#define OHAB_USER "your openhab user"
+#define OHAB_PASS "your openhab password"
+#define OHAB_TEST "CMD?Light_Button=ON"
+
+#define NTP_SERVER1 "ptbtime1.ptb.de"
+#define NTP_SERVER2 "0.pool.ntp.org"
+#define NTP_SERVER3 "1.pool.ntp.org"
+#define TZ_INFO     "UTC-1DST-2"
+
+#endif

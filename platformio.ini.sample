@@ -1,0 +1,26 @@
+; PlatformIO Project Configuration File
+;
+;   Build options: build flags, source filter
+;   Upload options: custom upload port, speed and extra flags
+;   Library options: dependencies, extra library storages
+;   Advanced options: extra scripting
+;
+; Please visit documentation for the other options and examples
+; http://docs.platformio.org/page/projectconf.html
+
+[env:esp32-gateway]
+platform = espressif32
+board = esp32-gateway
+framework = arduino
+build_flags = -DSDA=16 -DSCL=17
+
+lib_deps = AsyncTCP
+           ESP Async WebServer
+           ArduinoJson
+           Wire
+           ESP8266_SSD1306
+
+upload_port = espohab-gateway.local
+upload_flags = --auth=your-ota-password
+
+monitor_baud = 115200

@@ -1,0 +1,9 @@
+h3 {
+  color: #808090
+}
+
+.panel-heading {
+  background-image: linear-gradient(rgb(51, 122, 183) 0px, rgb(46, 109, 164) 100%) !important;
+  background-color: #2e6da4 !important;
+  color: #f0f0f0 !important;
+}

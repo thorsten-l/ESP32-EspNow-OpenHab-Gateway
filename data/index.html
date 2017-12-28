@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EspNow to OpenHAB Gateway</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" href="iot.css">
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+  <div class="container">
+    <h3>ESP32 - EspNow to OpenHAB Gateway</h3>
+  </div>
+
+  <div id="tabId" class="container">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#1" data-toggle="tab">Info</a></li>
+      <li><a href="#2" data-toggle="tab">Time</a></li>
+      <li><a href="#3" data-toggle="tab">Network</a></li>
+      <li><a href="#4" data-toggle="tab">API</a></li>
+    </ul>
+
+    <div class="tab-content ">
+      <div class="tab-pane active" id="1">
+
+        <form id="infoFormId">
+
+          <div style="margin-top: 2em" class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                   Application
+                </h3>
+            </div>
+
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="appNameId" class="control-label">Application Name</label>
+                <input class="form-control" id="appNameId" name="appName" value="appName" readonly="true">
+              </div>
+
+              <div class="form-group">
+                <label for="appVersionId" class="control-label">Application Version</label>
+                <input class="form-control" id="appVersionId" name="appVersion" value="appVersion" readonly="true">
+              </div>
+
+              <div class="form-group">
+                <label for="appAuthorId" class="control-label">Application Author</label>
+                <input class="form-control" id="appAuthorId" name="appAuthor" value="appAuthor" readonly="true">
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 2em" class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+               Build Information
+            </h3>
+            </div>
+
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="sdkVersionId" class="control-label">SDK Version</label>
+                <input class="form-control" id="sdkVersionId" name="sdkVersion" value="sdkVersion" readonly="true">
+              </div>
+
+              <div class="form-group">
+                <label for="buildDateId" class="control-label">Build Date</label>
+                <input class="form-control" id="buildDateId" name="buildDate" value="buildDate" readonly="true">
+              </div>
+
+              <div class="form-group">
+                <label for="buildTimeId" class="control-label">Build Time</label>
+                <input class="form-control" id="buildTimeId" name="buildTime" value="buildTime" readonly="true">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="tab-pane" id="2">
+        <form id="timeFormId">
+
+          <div style="margin-top: 2em" class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                   Uptime
+                </h3>
+            </div>
+
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="uptimeId" class="control-label">Uptime in milliseconds</label>
+                <input class="form-control" id="uptimeId" name="uptime" value="uptime" readonly="true">
+              </div>
+
+              <div class="form-group">
+                <label for="uptimeTextId" class="control-label">Uptime Text</label>
+                <input class="form-control" id="uptimeTextId" name="uptimeText" value="uptimeText" readonly="true">
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 2em" class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                   Network Time (SNTP)
+                </h3>
+            </div>
+
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="timeId" class="control-label">Time UTC in seconds</label>
+                <input class="form-control" id="timeId" name="time" value="time" readonly="true">
+              </div>
+
+              <div class="form-group">
+                <label for="timeTextId" class="control-label">Time Text</label>
+                <input class="form-control" id="timeTextId" name="timeText" value="timeText" readonly="true">
+              </div>
+
+              <div class="form-group">
+                <label for="timezoneId" class="control-label">Timezone</label>
+                <input class="form-control" id="timezoneId" name="timezone" value="timezone" readonly="true">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="tab-pane" id="3">
+
+        <form id="networkFormId">
+
+          <div style="margin-top: 2em" class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                   WiFi Settings
+                </h3>
+            </div>
+
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="wifiSsidId" class="control-label">WiFi SSID</label>
+                <input class="form-control" id="wifiSsidId" name="wifiSsid" value="wifiSsid" readonly="true">
+              </div>
+
+              <div class="form-group">
+                <label for="wifiHideSsidId" class="control-label">WiFi SSID is hidden (0=false/1=true)</label>
+                <input class="form-control" id="wifiHideSsidId" name="wifiHideSsid" value="wifiHideSsid" readonly="true">
+              </div>
+
+              <div class="form-group">
+                <label for="wifiChannelId" class="control-label">WiFi Channel</label>
+                <input class="form-control" id="wifiChannelId" name="wifiChannel" value="wifiChannel" readonly="true">
+              </div>
+
+              <div class="form-group">
+                <label for="wifiMacAddressId" class="control-label">WiFi MAC Address</label>
+                <input class="form-control" id="wifiMacAddressId" name="wifiMacAddress" value="wifiMacAddress" readonly="true">
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 2em" class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                 Ethernet Settings
+              </h3>
+            </div>
+
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="ethHostnameId" class="control-label">Ethernet Hostname</label>
+                <input class="form-control" id="ethHostnameId" name="ethHostname" value="ethHostname" readonly="true">
+              </div>
+
+              <div class="form-group">
+                <label for="ethMacAddressId" class="control-label">Ethernet MAC Address</label>
+                <input class="form-control" id="ethMacAddressId" name="ethMacAddress" value="ethMacAddress" readonly="true">
+              </div>
+
+              <div class="form-group">
+                <label for="ethIPv4AddressId" class="control-label">Ethernet IPv4 Address</label>
+                <input class="form-control" id="ethIPv4AddressId" name="ethIPv4Address" value="ethIPv4Address" readonly="true">
+              </div>
+
+              <div class="form-group">
+                <label for="ethIPv6AddressId" class="control-label">Ethernet IPv6 Address</label>
+                <input class="form-control" id="ethIPv6AddressId" name="ethIPv6Address" value="ethIPv6Address" readonly="true">
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 2em" class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                 OpenHAB Settings
+              </h3>
+            </div>
+
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="openHabUrlId" class="control-label">OpenHAB Base URL</label>
+                <input class="form-control" id="openHabUrlId" name="openHabUrl" value="openHabUrl" readonly="true">
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 2em" class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                 Firmware update OTA (Over The Air) Settings
+              </h3>
+            </div>
+
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="otaHostnameId" class="control-label">OTA Hostname (mDNS,Bonjour)</label>
+                <input class="form-control" id="otaHostnameId" name="otaHostname" value="otaHostname" readonly="true">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="tab-pane" id="4">
+        <div style="margin-top: 2em" class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+                 RESTful API (JSON)
+              </h3>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <li><a href="/api/system">/api/system</a></li>
+              <li><a href="/api/time">/api/time</a></li>
+              <li><a href="/api/network">/api/network</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <script>
+
+    function updateTimeFields()
+    {
+      $.ajax({
+        url: "/api/time"
+      }).then(function(data) {
+        $('#uptimeId').val(data.uptime);
+        $('#uptimeTextId').val(data.uptimeText);
+        $('#timeId').val(data.time);
+        $('#timeTextId').val(data.timeText);
+        $('#timezoneId').val(data.timezone);
+      });
+    }
+
+    $(document).ready(function() {
+      $.ajax({
+        url: "/api/system"
+      }).then(function(data) {
+        $('#appNameId').val(data.appName);
+        $('#appVersionId').val(data.appVersion);
+        $('#appAuthorId').val(data.appAuthor);
+        $('#sdkVersionId').val(data.sdkVersion);
+        $('#buildDateId').val(data.buildDate);
+        $('#buildTimeId').val(data.buildTime);
+      });
+
+      updateTimeFields();
+      setInterval( "updateTimeFields()", 5000 );
+
+      $.ajax({
+        url: "/api/network"
+      }).then(function(data) {
+        $('#wifiSsidId').val(data.wifiSsid);
+        $('#wifiHideSsidId').val(data.wifiHideSsid);
+        $('#wifiChannelId').val(data.wifiChannel);
+        $('#wifiMacAddressId').val(data.wifiMacAddress);
+        $('#otaHostnameId').val(data.otaHostname);
+        $('#ethHostnameId').val(data.ethHostname);
+        $('#ethMacAddressId').val(data.ethMacAddress);
+        $('#ethIPv4AddressId').val(data.ethIPv4Address);
+        $('#ethIPv6AddressId').val(data.ethIPv6Address);
+        $('#openHabUrlId').val(data.openHabUrl);
+      });
+    });
+  </script>
+
+</body>
+
+</html>
