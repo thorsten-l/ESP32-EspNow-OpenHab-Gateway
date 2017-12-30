@@ -49,8 +49,9 @@ void sendValue(String url)
 {
   HTTPClient http;
 
-  LOG();
-  Serial.println( url );
+  // LOG();
+  // Serial.println( url );
+  LOGF( "url=%s", url.c_str());
 
   http.begin(url);
   http.setAuthorization( OHAB_USER, OHAB_PASS );
@@ -60,20 +61,23 @@ void sendValue(String url)
 
   if(httpCode > 0)
   {
-    LOG();
-    Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+    // LOG();
+    // Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+    LOGF("[HTTP] GET... code: %d", httpCode);
 
     if(httpCode == HTTP_CODE_OK)
     {
       String payload = http.getString();
-      LOG();
-      Serial.println(payload);
+      // LOG();
+      // Serial.println(payload);
+      LOGF( "payload=%s", payload.c_str());
     }
   }
   else
   {
-    LOG();
-    Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+    // LOG();
+    // Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+    LOGF("[HTTP] GET... failed, error: %s", http.errorToString(httpCode).c_str());
   }
 
   http.end();
@@ -209,7 +213,7 @@ void loop()
 
     if ( millis() - displayTimestamp >= 5000 )
     {
-      Serial.println( displayPage );
+      // Serial.println( displayPage );
       display.clear();
 
       switch( displayPage )
@@ -242,10 +246,25 @@ void loop()
           display.drawString(10, 24, WIFI_SSID );
           display.drawString(5, 38, "MAC Address:");
           display.drawString(10, 48, WiFi.softAPmacAddress());
+          break;
+
+        case 3:
+        {
+          char buffer[16];
+          getLocalTime(&timeinfo);
+          display.setTextAlignment(TEXT_ALIGN_LEFT);
+          display.setFont(ArialMT_Plain_10);
+          display.drawString(0, 0, "TIME");
+          display.setFont(ArialMT_Plain_16);
+          sprintf( buffer, "%d-%02d-%02d", 1900 + timeinfo.tm_year, 1 + timeinfo.tm_mon, timeinfo.tm_mday );
+          display.drawString(10, 20, buffer );
+          sprintf( buffer, "%02d:%02d:%02d", timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec );
+          display.drawString(10, 40, buffer );
+        }
       }
 
       display.display();
-      displayPage = (++displayPage) % 3;
+      displayPage = (++displayPage) % 4;
       displayTimestamp = millis();
     }
 
