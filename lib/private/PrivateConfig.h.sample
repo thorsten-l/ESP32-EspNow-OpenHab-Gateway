@@ -1,7 +1,8 @@
 #ifndef __PRIVATE_CONFIG_H__
 #define __PRIVATE_CONFIG_H__
 
-#define APP_VERSION "1.4.1"
+#define APP_NAME "ESP32 EspNow OpenHAB Gateway"
+#define APP_VERSION "1.4.10"
 
 #define WIFI_SSID "EspOhab-Gateway"
 #define WIFI_PASS "0123456789"
