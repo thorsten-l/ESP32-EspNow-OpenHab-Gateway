@@ -19,8 +19,6 @@ void InitializeOTE()
   // In this case it is not OTA it's OTE "Over the Ethernet" ;-)
   MDNS.begin( OTA_HOSTNAME );
   MDNS.enableWorkstation( ESP_IF_ETH ); // Default is WiFi Station Interface
-  MDNS.addServiceTxt("arduino", "tcp", "fw_name", APP_NAME );
-  MDNS.addServiceTxt("arduino", "tcp", "fw_version", APP_VERSION );
 
   ArduinoOTA.setHostname(OTA_HOSTNAME);
   ArduinoOTA.setPasswordHash(OTA_PASS_HASH);
@@ -85,5 +83,7 @@ void InitializeOTE()
   } );
 
   ArduinoOTA.begin();
+  MDNS.addServiceTxt("_arduino", "_tcp", "fw_name", APP_NAME );
+  MDNS.addServiceTxt("_arduino", "_tcp", "fw_version", APP_VERSION );
   LOGM( "OTE initialized");
 }
