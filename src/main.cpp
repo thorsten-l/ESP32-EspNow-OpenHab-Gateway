@@ -16,7 +16,7 @@
 
 #define OLIMEX_BUTTON1 34
 
-SSD1306 display(0x3c, SDA, SCL ); // SDA and SCL defined in platformio.ini
+SSD1306 display(0x3c, SCL, SDA ); // SCL and SDA defined in platformio.ini
 
 struct tm timeinfo;
 bool ntpInitialized;
@@ -26,10 +26,10 @@ bool webServerInitialized;
 volatile int watchdogCounter;
 hw_timer_t *watchdogTimer = NULL;
 
-unsigned long displayTimestamp;
-unsigned int displayPage;
-unsigned long lastMillis;
-unsigned long loopTime;
+unsigned long displayTimestamp = 0l;
+unsigned int displayPage = 0;
+unsigned long lastMillis = 0l;
+unsigned long loopTime = 0l;
 
 
 void IRAM_ATTR watchdogFunction()
@@ -67,10 +67,12 @@ void sendValue(String url)
 
     if(httpCode == HTTP_CODE_OK)
     {
-      String payload = http.getString();
+      LOGM( "reading payload" );
+      // delay(10);
+      // String payload = http.getString();
       // LOG();
       // Serial.println(payload);
-      LOGF( "payload=%s", payload.c_str());
+      // LOGF( "payload=%s", payload.c_str());
     }
   }
   else
@@ -81,6 +83,7 @@ void sendValue(String url)
   }
 
   http.end();
+  LOGM("Connection closed.");
 }
 
 
@@ -264,7 +267,8 @@ void loop()
       }
 
       display.display();
-      displayPage = (++displayPage) % 4;
+      displayPage++;
+      displayPage = displayPage % 4;
       displayTimestamp = millis();
     }
 
