@@ -12,7 +12,6 @@
 platform = espressif32
 board = esp32-gateway
 framework = arduino
-build_flags = -DSDA=16 -DSCL=17
 
 lib_deps = AsyncTCP
            ESP Async WebServer
