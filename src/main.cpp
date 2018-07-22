@@ -16,11 +16,12 @@
 
 #define OLIMEX_BUTTON1 34
 
-SSD1306 display(0x3c, SCL, SDA ); // SCL and SDA defined in platformio.ini
+SSD1306Wire display(0x3c, SCL, SDA ); // SCL and SDA defined in platformio.ini
 
 struct tm timeinfo;
 bool ntpInitialized;
 bool otaInitialized;
+bool espNowInitialized;
 bool webServerInitialized;
 
 volatile int watchdogCounter;
@@ -122,16 +123,23 @@ void setup()
   //
   ntpInitialized = false;
   otaInitialized = false;
+  espNowInitialized = false;
   webServerInitialized = false;
   //
   displayTimestamp = 0;
   displayPage = 0;
   //
+  WiFi.mode( WIFI_OFF );
   WiFi.onEvent(NetEventHandler);
   InitializeDataMessageQueue();
   InitializeEspNowHandler();
+  espNowInitialized = true;
   InitializeSdCard();
+  LOGM( "Start ETH ...");
   ETH.begin();
+  LOGM( "ETH set hostname");
+  ETH.setHostname(ETH_HOSTNAME);
+  LOGM("Setup finnished");
 }
 
 void loop()
@@ -162,7 +170,8 @@ void loop()
     if ( !ntpInitialized )
     {
       LOGM( "Config SNTP");
-      configTzTime(TZ_INFO, NTP_SERVER1, NTP_SERVER2, NTP_SERVER3);
+
+      configTzTime(TZ_INFO, NTP_SERVER1);
 
       LOGM( "Receive local time...");
 
@@ -186,7 +195,7 @@ void loop()
       LOGM( "Test button pressed." );
       LOG();
       Serial.printf( "Loop time = %ld\n", loopTime );
-      //sendValue( OHAB_HOST OHAB_TEST );
+      sendValue( OHAB_HOST OHAB_TEST );
 
       getLocalTime(&timeinfo);
 
@@ -247,8 +256,11 @@ void loop()
           display.drawString(0, 0, "WIFI");
           display.drawString(5, 14, "BSSID:");
           display.drawString(10, 24, WIFI_SSID );
-          display.drawString(5, 38, "MAC Address:");
-          display.drawString(10, 48, WiFi.softAPmacAddress());
+          if ( espNowInitialized )
+          {
+            display.drawString(5, 38, "MAC Address:");
+            display.drawString(10, 48, WiFi.softAPmacAddress());
+          }
           break;
 
         case 3:
@@ -271,7 +283,6 @@ void loop()
       displayPage = displayPage % 4;
       displayTimestamp = millis();
     }
-
 
     if( dataMqAvailable() )
     {

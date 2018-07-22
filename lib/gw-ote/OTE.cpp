@@ -8,19 +8,22 @@
 #include <Wire.h>
 #include <SSD1306.h>
 
-extern SSD1306 display;
+extern SSD1306Wire display;
 
 #define DISPLAY_WIDTH 128
 #define DISPLAY_HEIGHT 64
 
 void InitializeOTE()
 {
-
   // In this case it is not OTA it's OTE "Over the Ethernet" ;-)
+  //LOGM( "MDNS begin" );
   MDNS.begin( OTA_HOSTNAME );
+  // LOGM( "MDNS enableWorkstation" );
   MDNS.enableWorkstation( ESP_IF_ETH ); // Default is WiFi Station Interface
 
+  // LOGM( "MDNS setHostname" );
   ArduinoOTA.setHostname(OTA_HOSTNAME);
+  // LOGM( "MDNS setPasswordHash" );
   ArduinoOTA.setPasswordHash(OTA_PASS_HASH);
 
   ArduinoOTA
@@ -82,6 +85,8 @@ void InitializeOTE()
       Serial.println("End Failed");
   } );
 
+
+  LOGM( "ArduinoOTA.begin" );
   ArduinoOTA.begin();
   MDNS.addServiceTxt("_arduino", "_tcp", "fw_name", APP_NAME );
   MDNS.addServiceTxt("_arduino", "_tcp", "fw_version", APP_VERSION );

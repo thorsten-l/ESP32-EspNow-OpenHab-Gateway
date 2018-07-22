@@ -31,6 +31,15 @@ void NetEventHandler(WiFiEvent_t event)
       Serial.print(", ");
       Serial.print(ETH.linkSpeed());
       Serial.println("Mbps");
+
+      LOG();
+      Serial.print( "Netmask: " );
+      Serial.print( ETH.subnetMask() );
+
+      Serial.print( ", Gateway: " );
+      Serial.print( ETH.gatewayIP() );
+
+      Serial.println();
       eth_connected = true;
       break;
 

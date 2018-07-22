@@ -58,6 +58,16 @@ void InitializeEspNowHandler()
     {
       LOGM( "ESPNow Init Success" );
 
+      LOG();
+      Serial.print( "WiFi IP: " );
+      Serial.print( WiFi.localIP() );
+
+      Serial.print( ", WiFi Netmask: " );
+      Serial.print( WiFi.subnetMask() );
+
+      Serial.print( ", WiFi Gateway: " );
+      Serial.println( WiFi.gatewayIP() );
+
       esp_now_register_recv_cb(OnDataRecv);
     }
     else
